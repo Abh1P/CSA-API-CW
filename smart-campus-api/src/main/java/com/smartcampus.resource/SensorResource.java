@@ -52,6 +52,42 @@ public class SensorResource {
         return Response.ok(sensors).build();
     }
 
+    // DELETE /api/v1/sensors/{id} - delete a sensor
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteSensor(@PathParam("id") String id) {
+        try {
+            Sensor sensor = store.getSensors().get(id);
+
+            if (sensor == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Sensor not found")
+                        .build();
+            }
+
+            String roomId = sensor.getRoomId();
+
+            if (roomId != null && store.getRooms().containsKey(roomId)) {
+                if (store.getRooms().get(roomId) != null &&
+                        store.getRooms().get(roomId).getSensorIds() != null) {
+
+                    store.getRooms().get(roomId).getSensorIds().remove(id);
+                }
+            }
+
+            store.getSensors().remove(id);
+
+            return Response.ok("Sensor deleted").build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Delete failed")
+                    .build();
+        }
+    }
+
     // Sub-resource locator for readings
     @Path("/{sensorId}/readings")
     public SensorReadingResource getReadingResource(@PathParam("sensorId") String sensorId) {

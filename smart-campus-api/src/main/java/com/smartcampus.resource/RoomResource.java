@@ -28,11 +28,18 @@ public class RoomResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createRoom(Room room) {
-        if (room.getId() == null || room.getName() == null) {
+        if (room == null ||
+            room.getId() == null || room.getId().isEmpty() ||
+            room.getName() == null || room.getName().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Room id and name are required")
                     .build();
         }
+
+        if (room.getSensorIds() == null) {
+            room.setSensorIds(new ArrayList<>());
+        }
+
         store.getRooms().put(room.getId(), room);
         return Response.status(Response.Status.CREATED).entity(room).build();
     }
