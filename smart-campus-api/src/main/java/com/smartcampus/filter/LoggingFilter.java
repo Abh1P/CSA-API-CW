@@ -11,17 +11,18 @@ import java.util.logging.Logger;
 @Provider
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
-    private static final Logger logger = Logger.getLogger(LoggingFilter.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoggingFilter.class.getName());
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        logger.info("Incoming request: " + requestContext.getMethod()
-                + " " + requestContext.getUriInfo().getRequestUri());
+        LOGGER.info("--- REQUEST ---");
+        LOGGER.info("Method: " + requestContext.getMethod());
+        LOGGER.info("URI: " + requestContext.getUriInfo().getAbsolutePath());
     }
 
     @Override
-    public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
-        logger.info("Outgoing response: " + responseContext.getStatus());
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
+        LOGGER.info("--- RESPONSE ---");
+        LOGGER.info("Status: " + responseContext.getStatus());
     }
 }
