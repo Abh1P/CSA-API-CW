@@ -39,7 +39,7 @@ public class RoomResource {
         return Response.ok(store.getRooms().values()).build();
     }
 
-    // PUT /api/v1/rooms/{id}
+    // PUT /api/v1/rooms/{id}3
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
