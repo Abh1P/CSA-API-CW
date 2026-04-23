@@ -1,26 +1,18 @@
 package com.smartcampus.model;
 
 public class SensorReading {
-    private String id;
+    private String sensorId;
     private long timestamp;
     private double value;
 
-    public SensorReading() {
+    public SensorReading() {}
+
+    public String getSensorId() {
+        return sensorId;
     }
 
-    public SensorReading(String id, long timestamp, double value) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.value = value;
-    }
-
-    // Getters and Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
     }
 
     public long getTimestamp() {
