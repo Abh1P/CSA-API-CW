@@ -53,14 +53,14 @@ public class SensorReadingResource {
                     .build();
         }
 
-        // ✅ SET VALUES
+        //  SET VALUES
         reading.setSensorId(sensorId);
         reading.setTimestamp(System.currentTimeMillis());
 
-        // ✅ UPDATE SENSOR VALUE
+        //  UPDATE SENSOR VALUE
         sensor.setCurrentValue(reading.getValue());
 
-        // ✅ STORE READING
+        //  STORE READING
         store.getReadings()
                 .computeIfAbsent(sensorId, k -> new ArrayList<>())
                 .add(reading);

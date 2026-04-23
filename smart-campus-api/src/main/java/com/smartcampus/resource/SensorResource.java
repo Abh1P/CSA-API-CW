@@ -46,6 +46,26 @@ public class SensorResource {
         return Response.ok(sensor).build();
     }
 
+    // GET ALL SENSORS (with optional filtering)
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSensors(@QueryParam("type") String type) {
+
+        java.util.List<Sensor> sensors = new java.util.ArrayList<>(store.getSensors().values());
+
+        // If no filter provided, return all sensors
+        if (type == null || type.isEmpty()) {
+            return Response.ok(sensors).build();
+        }
+
+        // Filter sensors by type
+        java.util.List<Sensor> filtered = sensors.stream()
+                .filter(s -> type.equalsIgnoreCase(s.getType()))
+                .collect(java.util.stream.Collectors.toList());
+
+        return Response.ok(filtered).build();
+    }
+
     // DELETE SENSOR
     @DELETE
     @Path("/{id}")
@@ -62,7 +82,7 @@ public class SensorResource {
         return Response.ok("Sensor deleted").build();
     }
 
-    // 🔥 SUB-RESOURCE
+    // SUB-RESOURCE
     @Path("/{id}/readings")
     public SensorReadingResource getSensorReadings(@PathParam("id") String id) {
         return new SensorReadingResource(id);
