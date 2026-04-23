@@ -118,7 +118,7 @@ In case when a client uploads the data using some media type other than the one 
 
 Yes, the DELETE function is idempotent. This implies that when a DELETE request is made multiple times, its effects remain unchanged after the first request. For example, in this implementation, a DELETE request deletes the resource only the first time it is issued. Further requests for a deleted resource result in "not found" responses or no effect.
 
----
+----
 
 ### Question 8
 
